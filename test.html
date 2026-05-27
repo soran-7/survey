@@ -1,402 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Form - Working Version</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .survey-wrapper {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            padding: 40px;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        h2 {
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            font-family: inherit;
-        }
-
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .checkbox-group {
-            margin-bottom: 25px;
-        }
-
-        .checkbox-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .checkbox {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .checkbox input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .btn-submit:hover {
-            opacity: 0.9;
-        }
-
-        .btn-submit:active {
-            transform: scale(0.98);
-        }
-
-        .success-box {
-            background: #d4edda;
-            border: 2px solid #28a745;
-            color: #155724;
-            padding: 20px;
-            border-radius: 5px;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .success-box h2 {
-            color: #155724;
-            margin-bottom: 15px;
-        }
-
-        .data-box {
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 15px;
-            font-size: 12px;
-            max-height: 250px;
-            overflow-y: auto;
-            font-family: monospace;
-            text-align: left;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .button-group button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-new {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-view {
-            background: #28a745;
-            color: white;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .error {
-            color: #d32f2f;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-    </style>
+<title>SURVEY</title>
+<style>
+body { font-family: Arial; background: #667eea; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+.box { background: white; padding: 30px; border-radius: 10px; width: 500px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+h1 { color: #333; margin-top: 0; }
+input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+button { width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+button:hover { background: #5568d3; }
+.hidden { display: none; }
+.success { background: #d4edda; border: 2px solid #28a745; padding: 20px; border-radius: 5px; color: #155724; text-align: center; }
+.data { background: #f5f5f5; padding: 15px; margin: 15px 0; border-radius: 5px; font-family: monospace; font-size: 12px; white-space: pre-wrap; word-break: break-all; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="survey-wrapper">
-            <!-- SURVEY FORM -->
-            <div id="formSection">
-                <h1>📋 Customer Survey</h1>
-                <p class="subtitle">Tell us what you think!</p>
-
-                <form id="surveyForm" onsubmit="handleSubmit(event)">
-                    <div class="form-group">
-                        <label for="name">Your Name *</label>
-                        <input type="text" id="name" placeholder="John Doe" required>
-                        <div class="error" id="nameError"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" placeholder="john@example.com" required>
-                        <div class="error" id="emailError"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="rating">How would you rate us? *</label>
-                        <select id="rating" required>
-                            <option value="">-- Select --</option>
-                            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-                            <option value="4">⭐⭐⭐⭐ Very Good</option>
-                            <option value="3">⭐⭐⭐ Good</option>
-                            <option value="2">⭐⭐ Fair</option>
-                            <option value="1">⭐ Poor</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="feedback">Your Feedback</label>
-                        <textarea id="feedback" placeholder="Tell us more..."></textarea>
-                    </div>
-
-                    <div class="form-group checkbox-group">
-                        <label>What should we improve?</label>
-                        <div class="checkbox-options">
-                            <label class="checkbox">
-                                <input type="checkbox" name="improvements" value="UI/UX">
-                                🎨 UI/UX Design
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="improvements" value="Speed">
-                                ⚡ Performance/Speed
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="improvements" value="Support">
-                                💬 Customer Support
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="improvements" value="Features">
-                                ✨ More Features
-                            </label>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit">✅ SUBMIT SURVEY</button>
-                </form>
-            </div>
-
-            <!-- SUCCESS MESSAGE -->
-            <div id="successSection" class="hidden">
-                <div class="success-box">
-                    <h2>🎉 Thank You!</h2>
-                    <p>Your response has been recorded successfully!</p>
-                    
-                    <div class="data-box" id="displayData"></div>
-
-                    <div class="button-group">
-                        <button class="btn-new" onclick="newSurvey()">📝 New Response</button>
-                        <button class="btn-view" onclick="viewAllResponses()">👁️ View All</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="box">
+  <div id="form">
+    <h1>📋 Survey Form</h1>
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    <select id="rating" required>
+      <option value="">Select Rating</option>
+      <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+      <option value="4">⭐⭐⭐⭐ Very Good</option>
+      <option value="3">⭐⭐⭐ Good</option>
+      <option value="2">⭐⭐ Fair</option>
+      <option value="1">⭐ Poor</option>
+    </select>
+    <textarea id="feedback" placeholder="Your Feedback" rows="4"></textarea>
+    <div style="margin-top: 10px;">
+      <label><input type="checkbox" name="improve" value="UI/UX"> UI/UX</label>
+      <label><input type="checkbox" name="improve" value="Speed"> Speed</label>
+      <label><input type="checkbox" name="improve" value="Support"> Support</label>
     </div>
+    <button onclick="submitForm()">✅ SUBMIT</button>
+  </div>
 
-    <script>
-        // Initialize storage
-        function initStorage() {
-            if (!localStorage.getItem('surveyData')) {
-                localStorage.setItem('surveyData', JSON.stringify([]));
-            }
-        }
+  <div id="success" class="hidden">
+    <div class="success">
+      <h2>🎉 THANK YOU!</h2>
+      <p>Your response was saved successfully!</p>
+      <div class="data" id="showData"></div>
+      <button onclick="reset()">New Response</button>
+      <button onclick="showAll()">View All</button>
+    </div>
+  </div>
+</div>
 
-        initStorage();
+<script>
+function submitForm() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const rating = document.getElementById('rating').value;
+  const feedback = document.getElementById('feedback').value;
+  const improve = Array.from(document.querySelectorAll('input[name="improve"]:checked')).map(x => x.value);
 
-        // Handle form submission
-        function handleSubmit(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const rating = document.getElementById('rating').value;
-            const feedback = document.getElementById('feedback').value.trim();
-            const improvements = Array.from(document.querySelectorAll('input[name="improvements"]:checked'))
-                .map(cb => cb.value);
+  if (!name || !email || !rating) {
+    alert('Fill all required fields!');
+    return;
+  }
 
-            // Validation
-            let valid = true;
-            if (!name) {
-                document.getElementById('nameError').textContent = 'Name is required';
-                valid = false;
-            }
-            if (!email) {
-                document.getElementById('emailError').textContent = 'Email is required';
-                valid = false;
-            }
-            if (!rating) {
-                valid = false;
-            }
+  const data = {
+    name: name,
+    email: email,
+    rating: rating,
+    feedback: feedback,
+    improvements: improve,
+    time: new Date().toLocaleString()
+  };
 
-            if (!valid) {
-                alert('❌ Please fill in all required fields');
-                return;
-            }
+  let all = JSON.parse(localStorage.getItem('surveys')) || [];
+  all.push(data);
+  localStorage.setItem('surveys', JSON.stringify(all));
 
-            // Create response object
-            const response = {
-                id: Date.now(),
-                name: name,
-                email: email,
-                rating: rating,
-                feedback: feedback,
-                improvements: improvements,
-                timestamp: new Date().toLocaleString()
-            };
+  document.getElementById('showData').innerText = 'Name: ' + name + '\nEmail: ' + email + '\nRating: ' + rating + '/5\nFeedback: ' + (feedback || 'None') + '\nImprovements: ' + (improve.length > 0 ? improve.join(', ') : 'None') + '\nTime: ' + data.time + '\n\nTotal Responses: ' + all.length;
 
-            // Save to storage
-            const allResponses = JSON.parse(localStorage.getItem('surveyData'));
-            allResponses.push(response);
-            localStorage.setItem('surveyData', JSON.stringify(allResponses));
+  document.getElementById('form').classList.add('hidden');
+  document.getElementById('success').classList.remove('hidden');
 
-            // Show success
-            showSuccess(response, allResponses.length);
-        }
+  console.log('✅ Survey Saved!', data);
+  console.log('Total responses:', all.length);
+}
 
-        // Show success message
-        function showSuccess(data, totalCount) {
-            document.getElementById('formSection').classList.add('hidden');
-            document.getElementById('successSection').classList.remove('hidden');
+function reset() {
+  document.getElementById('name').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('rating').value = '';
+  document.getElementById('feedback').value = '';
+  document.querySelectorAll('input[name="improve"]').forEach(x => x.checked = false);
+  document.getElementById('form').classList.remove('hidden');
+  document.getElementById('success').classList.add('hidden');
+}
 
-            const display = `✅ RESPONSE #${totalCount} SAVED
+function showAll() {
+  let all = JSON.parse(localStorage.getItem('surveys')) || [];
+  if (all.length === 0) {
+    alert('No responses yet');
+    return;
+  }
+  let msg = '📊 TOTAL: ' + all.length + '\n\n';
+  all.forEach((d, i) => {
+    msg += (i+1) + '. ' + d.name + ' (' + d.email + ') - Rating: ' + d.rating + '/5\n';
+  });
+  alert(msg);
+  console.log('All responses:', all);
+}
 
-Name: ${data.name}
-Email: ${data.email}
-Rating: ${data.rating}/5 ⭐
-Feedback: ${data.feedback || '(empty)'}
-Improvements: ${data.improvements.length > 0 ? data.improvements.join(', ') : '(none selected)'}
-Time: ${data.timestamp}`;
-
-            document.getElementById('displayData').textContent = display;
-
-            // Log to console
-            console.log('✅ Survey Response Saved!', data);
-            console.log('📊 Total Responses:', totalCount);
-        }
-
-        // New survey
-        function newSurvey() {
-            document.getElementById('surveyForm').reset();
-            document.getElementById('formSection').classList.remove('hidden');
-            document.getElementById('successSection').classList.add('hidden');
-            document.getElementById('nameError').textContent = '';
-            document.getElementById('emailError').textContent = '';
-        }
-
-        // View all responses
-        function viewAllResponses() {
-            const allResponses = JSON.parse(localStorage.getItem('surveyData'));
-            
-            if (allResponses.length === 0) {
-                alert('📭 No responses yet');
-                return;
-            }
-
-            let display = `📊 TOTAL RESPONSES: ${allResponses.length}\n\n`;
-            
-            allResponses.forEach((resp, index) => {
-                display += `━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-                display += `RESPONSE #${index + 1}\n`;
-                display += `Name: ${resp.name}\n`;
-                display += `Email: ${resp.email}\n`;
-                display += `Rating: ${resp.rating}/5 ⭐\n`;
-                display += `Feedback: ${resp.feedback || '(none)'}\n`;
-                display += `Improvements: ${resp.improvements.length > 0 ? resp.improvements.join(', ') : '(none)'}\n`;
-                display += `Time: ${resp.timestamp}\n`;
-            });
-
-            alert(display);
-            console.log('All Responses:', allResponses);
-        }
-
-        // On load
-        console.log('✅ Survey app loaded and working!');
-        console.log('Type in console: viewAllResponses()');
-    </script>
+console.log('✅ Survey ready! Type showAll() to see responses');
+</script>
 </body>
 </html>
